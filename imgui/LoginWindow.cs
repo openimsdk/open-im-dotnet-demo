@@ -10,10 +10,10 @@ public class LoginWindow : ImGuiWindow
     byte[] userToken = new byte[256];
     public LoginWindow(string title, Rect position) : base(title, position)
     {
-        bgColor = new Vector4(1, 1, 1, 1);
-        var user = "openIM123456";
+        bgColor = new Vector4(0.5f, 0.5f, 0.5f, 1);
+        var user = "yejian001";
+        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ5ZWppYW4wMDEiLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MTYwNDA1NjMsIm5iZiI6MTcwODI2NDI2MywiaWF0IjoxNzA4MjY0NTYzfQ.Qu_tjWfYCAYyZ3lxrZaBisp2VlXWJo9knBNcRS0UygI";
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(user), 0, userId, 0, user.Length);
-        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJvcGVuSU0xMjM0NTYiLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MTQ1NzIwNDQsIm5iZiI6MTcwNjc5NTc0NCwiaWF0IjoxNzA2Nzk2MDQ0fQ.hyu88OH8MgTrmBqANzKReeYu3PQE9UrsjA-ziwrTouM";
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(token), 0, userToken, 0, token.Length);
     }
     public override void OnDraw()
@@ -33,15 +33,14 @@ public class LoginWindow : ImGuiWindow
         if (ImGui.InputText("Token", userToken, 256, ImGuiInputTextFlags.None))
         {
         }
-        if (ImGui.Button("RequestToken"))
-        {
-            user.RequestToken("openIM123456");
-        }
-        ImGui.SameLine();
+        ImGui.Spacing();
+        ImGui.Spacing();
+        ImGui.Spacing();
+        ImGui.SetCursorPosX(position.w / 2 - 50);
         if (ImGui.Button("Login"))
         {
-            string id = Encoding.UTF8.GetString(userId);
-            string token = Encoding.UTF8.GetString(userToken);
+            string id = Encoding.UTF8.GetString(userId).TrimEnd('\0');
+            string token = Encoding.UTF8.GetString(userToken).TrimEnd('\0');
             if (id == null || token == null)
             {
                 return;
@@ -64,9 +63,7 @@ public class LoginWindow : ImGuiWindow
         {
             ImGui.Text("ConnectFailed");
         }
-        // ImGui.PopItemWidth();
         ImGui.End();
-        // ImGui.PopStyleColor();
         ImGui.PopStyleVar();
     }
 

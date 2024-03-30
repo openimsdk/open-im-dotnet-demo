@@ -11,18 +11,25 @@ public class MainWindow : ImGuiWindow
     byte[] userToken = new byte[256];
     public MainWindow(string title, Rect position) : base(title, position)
     {
-        bgColor = new Vector4(1, 1, 1, 1);
+        bgColor = new Vector4(0.5f, 0.5f, 0.5f, 1);
         var user = "openIM123456";
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(user), 0, userId, 0, user.Length);
-        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJvcGVuSU0xMjM0NTYiLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MTQzNTI2NjgsIm5iZiI6MTcwNjU3NjM2OCwiaWF0IjoxNzA2NTc2NjY4fQ.7eQSy7zYGb6GZYZx8dvMJVQqV6U5BhmHPlm-rOop_WM";
+        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ5ZWppYW4wMDEiLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MTYwNDA1NjMsIm5iZiI6MTcwODI2NDI2MywiaWF0IjoxNzA4MjY0NTYzfQ.Qu_tjWfYCAYyZ3lxrZaBisp2VlXWJo9knBNcRS0UygI";
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(token), 0, userToken, 0, token.Length);
     }
     public int selectTabMenu = 0;
     static string[] TabMenuName = new string[] { "User", "Conversation", "Friend", "Group" };
+
+    byte[] addFriendId = new byte[128];
+    byte[] addGroupId = new byte[128];
+
+    public object FromUserID { get; private set; }
+
     public override void OnDraw()
     {
         ImGui.PushStyleColor(ImGuiCol.WindowBg, bgColor);
-        ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 0);
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 1);
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 1);
         ImGui.SetNextWindowPos(new Vector2(position.x, position.y));
         ImGui.SetNextWindowSize(new Vector2(position.w, position.h), ImGuiCond.Always);
         ImGui.Begin(title, ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize);
@@ -55,7 +62,7 @@ public class MainWindow : ImGuiWindow
             }
         }
         ImGui.End();
-        ImGui.PopStyleVar();
+        ImGui.PopStyleVar(2);
         ImGui.PopStyleColor();
     }
 
@@ -78,8 +85,24 @@ public class MainWindow : ImGuiWindow
                     ImGui.Text("AppMangerLevel:" + user.SelfUserInfo.AppMangerLevel.ToString());
                 }
             }
+            ImGui.SeparatorText("Friend");
+            ImGui.InputText("FriendId", addFriendId, 128, ImGuiInputTextFlags.None);
+            if (ImGui.Button("AddFriend"))
+            {
+                IMSDK.AddFriend((suc, errCode, errMsg) =>
+                {
+
+                }, new ApplyToAddFriendReq()
+                {
+                    FromUserID = user.SelfUserInfo.UserID,
+                    ToUserID = Encoding.UTF8.GetString(addFriendId).TrimEnd('\0'),
+                    ReqMsg = "",
+                    Ex = "",
+                });
+            }
         }
         ImGui.EndGroup();
+
     }
     public void DrawConversation()
     {

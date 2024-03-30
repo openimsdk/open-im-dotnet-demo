@@ -79,18 +79,6 @@ public class User : IConnCallBack
             }
         });
     }
-    public void RequestToken(string userName)
-    {
-        TokenMgr.RequestToken(open_im_sdk.PlatformID.WindowsPlatformID, userName, (token, expireTime) =>
-        {
-            if (token != "")
-            {
-                RequestedToken = token;
-                Debug.Log(token);
-            }
-        });
-    }
-
     public void OnConnecting()
     {
         ConnectStatus = ConnectStatus.Connecting;

@@ -56,7 +56,7 @@ public class Demo : GameWindow
     protected override void OnRenderFrame(FrameEventArgs e)
     {
         base.OnRenderFrame(e);
-        GL.ClearColor(new Color4(200, 200, 200, 255));
+        GL.ClearColor(new Color4(0.5f, 0.5f, 0.5f, 1.0f));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
         imguiBackEnd.StartFrame();
         if (User.Instance.ConnectStatus == ConnectStatus.ConnectSuc)
