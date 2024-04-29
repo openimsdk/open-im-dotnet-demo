@@ -18,16 +18,6 @@ public class Conversation : IConversationListener
         conversationList = new List<LocalConversation>();
     }
 
-    public void AddConversations(List<LocalConversation> list)
-    {
-        conversationList.AddRange(list);
-    }
-
-    public void AddConversation(LocalConversation conversation)
-    {
-        conversationList.Add(conversation);
-    }
-
     public void OnConversationChanged(List<LocalConversation> conversationList)
     {
     }
@@ -42,6 +32,17 @@ public class Conversation : IConversationListener
 
     public void OnSyncServerFinish()
     {
+        IMSDK.GetAllConversationList((list, errCode, errMsg) =>
+        {
+            if (list != null)
+            {
+                conversationList.AddRange(list);
+            }
+            else
+            {
+                Debug.Log(errCode, errMsg);
+            }
+        });
     }
 
     public void OnSyncServerStart()
@@ -49,6 +50,10 @@ public class Conversation : IConversationListener
     }
 
     public void OnTotalUnreadMessageCountChanged(int totalUnreadCount)
+    {
+    }
+
+    public void OnConversationUserInputStatusChanged(InputStatesChangedData data)
     {
     }
 }

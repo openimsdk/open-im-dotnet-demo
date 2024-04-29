@@ -7,7 +7,23 @@ public class FriendShip : IFriendShipListener
     {
         FriendList = new List<LocalFriend>();
     }
-
+    public void RefreshFriendList()
+    {
+        IMSDK.GetFriendList((list, errCode, errMsg) =>
+       {
+           if (list != null)
+           {
+               foreach (FullUserInfo fullUserInfo in list)
+               {
+                   FriendList.Add(fullUserInfo.FriendInfo);
+               }
+           }
+           else
+           {
+               Debug.Log(errMsg);
+           }
+       });
+    }
     public void AddFriends(List<LocalFriend> friends)
     {
         FriendList.AddRange(friends);

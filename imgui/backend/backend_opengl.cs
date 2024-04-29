@@ -40,11 +40,11 @@ namespace imgui.backend
             // io.Fonts.AddFontFromFileTTF("./res/fonts/PingFang-SC-Light.ttf", 16, new ImFontConfigPtr
             // {
             // }, io.Fonts.GetGlyphRangesChineseFull());
-            // io.Fonts.AddFontFromFileTTF("./res/fonts/PingFang-SC-Regular.ttf", 16, null, io.Fonts.GetGlyphRangesChineseFull());
-            // io.FontGlobalScale = 1.0f;
-            // ImGui.GetStyle().AntiAliasedLines = true;
-            // ImGui.GetStyle().AntiAliasedFill = true;
-            // ImGui.GetStyle().AntiAliasedLinesUseTex = true;
+            io.Fonts.AddFontFromFileTTF("./PingFang-SC-Regular.ttf", 16, null, io.Fonts.GetGlyphRangesChineseFull());
+            io.FontGlobalScale = 1.0f;
+            ImGui.GetStyle().AntiAliasedLines = true;
+            ImGui.GetStyle().AntiAliasedFill = true;
+            ImGui.GetStyle().AntiAliasedLinesUseTex = true;
             io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
             CreateDeviceResources();
         }

@@ -5,14 +5,12 @@ using open_im_sdk;
 
 public class LoginWindow : ImGuiWindow
 {
-    Vector4 bgColor;
     byte[] userId = new byte[128];
     byte[] userToken = new byte[256];
     public LoginWindow(string title, Rect position) : base(title, position)
     {
-        bgColor = new Vector4(0.5f, 0.5f, 0.5f, 1);
-        var user = "yejian001";
-        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ5ZWppYW4wMDEiLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MTYwNDA1NjMsIm5iZiI6MTcwODI2NDI2MywiaWF0IjoxNzA4MjY0NTYzfQ.Qu_tjWfYCAYyZ3lxrZaBisp2VlXWJo9knBNcRS0UygI";
+        var user = "yejian";
+        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ5ZWppYW4iLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MjIwMzcxMjUsIm5iZiI6MTcxNDI2MDgyNSwiaWF0IjoxNzE0MjYxMTI1fQ.VynYKfHcR17GwpJRp4uEr9mv_OIJXrbq0_NXhNTBFJQ";
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(user), 0, userId, 0, user.Length);
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(token), 0, userToken, 0, token.Length);
     }
@@ -20,7 +18,6 @@ public class LoginWindow : ImGuiWindow
     {
         var user = User.Instance;
         ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 5);
-        // ImGui.PushStyleColor(ImGuiCol.WindowBg, bgColor);
         ImGui.SetNextWindowPos(new Vector2(position.x, position.y));
         ImGui.SetNextWindowSize(new Vector2(position.w, position.h), ImGuiCond.Always);
         ImGui.Begin(title, ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize);

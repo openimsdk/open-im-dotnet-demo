@@ -6,28 +6,20 @@ using open_im_sdk;
 
 public class MainWindow : ImGuiWindow
 {
-    Vector4 bgColor;
-    byte[] userId = new byte[128];
-    byte[] userToken = new byte[256];
     public MainWindow(string title, Rect position) : base(title, position)
     {
-        bgColor = new Vector4(0.5f, 0.5f, 0.5f, 1);
-        var user = "openIM123456";
-        Buffer.BlockCopy(Encoding.ASCII.GetBytes(user), 0, userId, 0, user.Length);
-        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ5ZWppYW4wMDEiLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MTYwNDA1NjMsIm5iZiI6MTcwODI2NDI2MywiaWF0IjoxNzA4MjY0NTYzfQ.Qu_tjWfYCAYyZ3lxrZaBisp2VlXWJo9knBNcRS0UygI";
-        Buffer.BlockCopy(Encoding.ASCII.GetBytes(token), 0, userToken, 0, token.Length);
     }
-    public int selectTabMenu = 0;
+    int selectTabMenu = 0;
     static string[] TabMenuName = new string[] { "User", "Conversation", "Friend", "Group" };
 
     byte[] addFriendId = new byte[128];
     byte[] addGroupId = new byte[128];
 
-    public object FromUserID { get; private set; }
-
+    int selectConversationIndex = -1;
+    int selectFriendIndex = -1;
+    int selectGroupIndex = -1;
     public override void OnDraw()
     {
-        ImGui.PushStyleColor(ImGuiCol.WindowBg, bgColor);
         ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 1);
         ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 1);
         ImGui.SetNextWindowPos(new Vector2(position.x, position.y));
@@ -63,10 +55,9 @@ public class MainWindow : ImGuiWindow
         }
         ImGui.End();
         ImGui.PopStyleVar(2);
-        ImGui.PopStyleColor();
     }
 
-    public void DrawUserInfo()
+    void DrawUserInfo()
     {
         var user = User.Instance;
         ImGui.SameLine();
@@ -76,73 +67,104 @@ public class MainWindow : ImGuiWindow
             ImGui.Text("LoginStatus:" + user.LoginStatus.ToString());
             if (user.SelfUserInfo != null)
             {
-                if (ImGui.CollapsingHeader("SelfUserInfo"))
-                {
-                    ImGui.Text("UserId:" + user.SelfUserInfo.UserID);
-                    ImGui.Text("NickName:" + user.SelfUserInfo.Nickname);
-                    ImGui.Text("FaceURL:" + user.SelfUserInfo.FaceURL);
-                    ImGui.Text("CreateTime:" + user.SelfUserInfo.CreateTime.ToString());
-                    ImGui.Text("AppMangerLevel:" + user.SelfUserInfo.AppMangerLevel.ToString());
-                }
+                ImGui.Text("用户ID:" + user.SelfUserInfo.UserID);
+                ImGui.Text("昵称:" + user.SelfUserInfo.Nickname);
+                ImGui.Text("头像:" + user.SelfUserInfo.FaceURL);
+                ImGui.Text("CreateTime:" + user.SelfUserInfo.CreateTime.ToString());
             }
-            ImGui.SeparatorText("Friend");
-            ImGui.InputText("FriendId", addFriendId, 128, ImGuiInputTextFlags.None);
-            if (ImGui.Button("AddFriend"))
-            {
-                IMSDK.AddFriend((suc, errCode, errMsg) =>
-                {
+            // ImGui.SeparatorText("Friend");
+            // ImGui.InputText("FriendId", addFriendId, 128, ImGuiInputTextFlags.None);
+            // if (ImGui.Button("AddFriend"))
+            // {
+            //     IMSDK.AddFriend((suc, errCode, errMsg) =>
+            //     {
 
-                }, new ApplyToAddFriendReq()
-                {
-                    FromUserID = user.SelfUserInfo.UserID,
-                    ToUserID = Encoding.UTF8.GetString(addFriendId).TrimEnd('\0'),
-                    ReqMsg = "",
-                    Ex = "",
-                });
-            }
+            //     }, new ApplyToAddFriendReq()
+            //     {
+            //         FromUserID = user.SelfUserInfo.UserID,
+            //         ToUserID = Encoding.UTF8.GetString(addFriendId).TrimEnd('\0'),
+            //         ReqMsg = "",
+            //         Ex = "",
+            //     });
+            // }
         }
         ImGui.EndGroup();
 
     }
-    public void DrawConversation()
+    void DrawConversation()
     {
         var user = User.Instance;
         ImGui.SameLine();
         ImGui.BeginChild("ConversationList", new Vector2(200, 0), true);
-        if (user.Conversation.ConversationList.Count > 0)
+        var list = user.Conversation.ConversationList;
+        if (list != null)
         {
+            for (int i = 0; i < list.Count; i++)
+            {
+                var conversation = list[i];
+                if (ImGui.Selectable(conversation.ShowName, selectConversationIndex == i))
+                {
+                    selectConversationIndex = i;
+                }
+            }
         }
         ImGui.EndChild();
         ImGui.SameLine();
         ImGui.BeginChild("CharInfo", new Vector2(position.w - 300, 0), true);
         ImGui.EndChild();
     }
-    public void DrawFriend()
+    void DrawFriend()
     {
         var user = User.Instance;
         ImGui.SameLine();
         ImGui.BeginChild("FriendList", new Vector2(200, 0), true);
-        if (user.Friend.FriendList != null)
+        var list = user.Friend.FriendList;
+        if (list != null)
         {
-
+            for (int i = 0; i < list.Count; i++)
+            {
+                var f = list[i];
+                if (ImGui.Selectable(f.Nickname, selectFriendIndex == i))
+                {
+                    selectFriendIndex = i;
+                }
+            }
         }
         ImGui.EndChild();
         ImGui.SameLine();
-        ImGui.BeginChild("FriendMenu", new Vector2(position.w - 300, 0), true);
+        ImGui.BeginChild("", new Vector2(position.w - 300, 0), true);
+        if (selectFriendIndex >= 0)
+        {
+            if (ImGui.Button("Send"))
+            {
+                var msg = IMSDK.CreateTextMessage("中文信息");
+                Debug.Log(open_im_sdk.util.Utils.ToJson(msg));
+            }
+        }
         ImGui.EndChild();
     }
-    public void DrawGroup()
+    void DrawGroup()
     {
         var user = User.Instance;
         ImGui.SameLine();
         ImGui.BeginChild("GroupList", new Vector2(200, 0), true);
-        if (user.Group.GroupList != null)
+        var list = user.Group.GroupList;
+        if (list != null)
         {
-
+            for (int i = 0; i < list.Count; i++)
+            {
+                var f = list[i];
+                if (ImGui.Selectable(f.GroupName, selectGroupIndex == i))
+                {
+                    selectGroupIndex = i;
+                }
+            }
         }
         ImGui.EndChild();
         ImGui.SameLine();
         ImGui.BeginChild("GroupInfo", new Vector2(position.w - 300, 0), true);
         ImGui.EndChild();
     }
+
+
 }

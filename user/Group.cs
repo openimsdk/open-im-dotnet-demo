@@ -10,15 +10,20 @@ public class Group : IGroupListener
         GroupList = new List<LocalGroup>();
     }
 
-    public void AddGroups(List<LocalGroup> groups)
+    public void RefreshGroupList()
     {
-        GroupList.AddRange(groups);
+        IMSDK.GetJoinedGroupList((list, err, errMsg) =>
+        {
+            if (list != null)
+            {
+                GroupList.AddRange(list);
+            }
+            else
+            {
+                Debug.Log(errMsg);
+            }
+        });
     }
-    public void AddGroup(LocalGroup group)
-    {
-        GroupList.Add(group);
-    }
-
     public void OnGroupApplicationAccepted(LocalGroupRequest groupApplication)
     {
     }

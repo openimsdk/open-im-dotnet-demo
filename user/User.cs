@@ -19,7 +19,6 @@ public class User : IConnCallBack
             return user;
         }
     }
-    public string RequestedToken = "";
     public LocalUser SelfUserInfo;
     public Conversation Conversation;
     public FriendShip Friend;
@@ -36,15 +35,16 @@ public class User : IConnCallBack
     {
         var config = new IMConfig()
         {
-            PlatformID = (int)open_im_sdk.PlatformID.WindowsPlatformID,
+            PlatformID = Config.PlatformID,
             ApiAddr = Config.APIAddr,
             WsAddr = Config.WsAddr,
-            DataDir = "./temp/",
-            LogLevel = 5,
-            IsLogStandardOutput = true,
-            LogFilePath = "./temp/",
-            IsExternalExtensions = true,
+            DataDir = Config.DataDir,
+            LogLevel = Config.LogLevel,
+            IsLogStandardOutput = Config.IsLogStandardOutput,
+            LogFilePath = Config.LogFilePath,
+            IsExternalExtensions = Config.IsExternalExtensions,
         };
+
         var res = IMSDK.InitSDK(config, this);
         if (!res)
         {
@@ -86,6 +86,7 @@ public class User : IConnCallBack
     public void OnConnectSuccess()
     {
         ConnectStatus = ConnectStatus.ConnectSuc;
+
         InitData();
     }
     public void OnConnectFailed(int errCode, string errMsg)
@@ -113,33 +114,10 @@ public class User : IConnCallBack
             }
             else
             {
-                Debug.Log(errCode, errMsg);
+                Debug.Log(errMsg);
             }
         });
-        IMSDK.GetAllConversationList((data, errCode, errMsg) =>
-        {
-            if (data != null)
-            {
-                Conversation.AddConversations(data);
-            }
-            else
-            {
-                Debug.Log(errCode, errMsg);
-            }
-        });
-        IMSDK.GetFriendList((data, errCode, errMsg) =>
-        {
-            if (data != null)
-            {
-                foreach (var fullUserInfo in data)
-                {
-                    Friend.AddFriend(fullUserInfo.FriendInfo);
-                }
-            }
-            else
-            {
-                Debug.Log(errCode, errMsg);
-            }
-        });
+        Friend.RefreshFriendList();
+        Group.RefreshGroupList();
     }
 }

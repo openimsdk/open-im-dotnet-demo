@@ -3,10 +3,10 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using imgui.backend;
+using ImGuiNET;
 public class Demo : GameWindow
 {
     ImGuiBackEnd imguiBackEnd;
-
     LoginWindow login;
     MainWindow main;
     public Demo() : base(GameWindowSettings.Default, new NativeWindowSettings() { StartVisible = true, APIVersion = new Version(4, 6) })
@@ -56,7 +56,7 @@ public class Demo : GameWindow
     protected override void OnRenderFrame(FrameEventArgs e)
     {
         base.OnRenderFrame(e);
-        GL.ClearColor(new Color4(0.5f, 0.5f, 0.5f, 1.0f));
+        GL.ClearColor(new Color4(1.0f, 1.0f, 1.0f, 1.0f));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
         imguiBackEnd.StartFrame();
         if (User.Instance.ConnectStatus == ConnectStatus.ConnectSuc)
