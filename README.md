@@ -1,14 +1,18 @@
 # open-im-dotnet-demo
 
-## step 1  genetate open-im-sdk.1.0.0.nupkg
-    git clone https://github.com/yj12138/open-im-sdk-dotnet.git
-    cd open-im-sdk-dotnet
-    dotnet pack -c Release  
-## step 2 
+openim dotnet 测试用例，使用IMGUI作为UI界面，快速测试
+
+## 开发环境
+    dotnet(net7.0)
+
+## 使用方法
+
+## step 1  克隆代码
+``` bash
     git clone https://github.com/yj12138/open-im-dotnet-demo.git
-    cd open-im-dotnet-demo
-    copy open-im-sdk.1.0.0.nupkg ./
-    dotnet add package --source ./ open-im-sdk -v 1.0.0
-## step 3
-    copy open-im-sdk-dotnet/Plugins ./
-    dotnet run
+```
+
+## step 2 运行
+``` bash
+    dotnet run ./openim_sdk_demo.csproj
+```
