@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using System.Diagnostics;
 using ErrorCode = OpenTK.Graphics.OpenGL4.ErrorCode;
 
 namespace imgui.backend

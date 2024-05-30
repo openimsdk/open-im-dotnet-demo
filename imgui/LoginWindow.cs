@@ -1,7 +1,7 @@
 using System.Numerics;
 using System.Text;
 using ImGuiNET;
-using open_im_sdk;
+using Newtonsoft.Json;
 
 public class LoginWindow : ImGuiWindow
 {
@@ -10,7 +10,8 @@ public class LoginWindow : ImGuiWindow
     public LoginWindow(string title, Rect position) : base(title, position)
     {
         var user = "yejian";
-        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ5ZWppYW4iLCJQbGF0Zm9ybUlEIjozLCJleHAiOjE3MjIwMzcxMjUsIm5iZiI6MTcxNDI2MDgyNSwiaWF0IjoxNzE0MjYxMTI1fQ.VynYKfHcR17GwpJRp4uEr9mv_OIJXrbq0_NXhNTBFJQ";
+        // TODO read from local cache
+        var token = "";
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(user), 0, userId, 0, user.Length);
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(token), 0, userToken, 0, token.Length);
     }
@@ -31,9 +32,7 @@ public class LoginWindow : ImGuiWindow
         {
         }
         ImGui.Spacing();
-        ImGui.Spacing();
-        ImGui.Spacing();
-        ImGui.SetCursorPosX(position.w / 2 - 50);
+        ImGui.SetCursorPosX(position.w / 2 - 100);
         if (ImGui.Button("Login"))
         {
             string id = Encoding.UTF8.GetString(userId).TrimEnd('\0');
@@ -47,6 +46,12 @@ public class LoginWindow : ImGuiWindow
                 return;
             }
             User.Instance.Login(id, token);
+        }
+        ImGui.SameLine();
+        if (ImGui.Button("GetToken"))
+        {
+            string id = Encoding.UTF8.GetString(userId).TrimEnd('\0');
+            RefreshToken(id);
         }
         if (user.ConnectStatus == ConnectStatus.Connecting)
         {
@@ -64,4 +69,39 @@ public class LoginWindow : ImGuiWindow
         ImGui.PopStyleVar();
     }
 
+    async void RefreshToken(string userId)
+    {
+        using (var httpClient = new HttpClient())
+        {
+            try
+            {
+                var url = string.Format("{0}{1}", Config.APIAddr, "/auth/user_token");
+                var userTokenReq = new UserTokenReq()
+                {
+                    secret = "openIM123",
+                    platformID = (int)User.PlatformID,
+                    userID = userId,
+                };
+                var postData = JsonConvert.SerializeObject(userTokenReq);
+                httpClient.DefaultRequestHeaders.Add("operationID", "111111");
+                HttpResponseMessage response = await httpClient.PostAsync(url, new StringContent(postData, Encoding.UTF8, "application/json"));
+                response.EnsureSuccessStatusCode();
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var res = JsonConvert.DeserializeObject<UserTokenRes>(jsonResponse);
+                if (res.errCode > 0)
+                {
+                    Console.WriteLine($"Http Request Error Code :{res.errCode + ":" + res.errMsg}");
+                }
+                else
+                {
+                    var token = res.data.token;
+                    Buffer.BlockCopy(Encoding.ASCII.GetBytes(token), 0, userToken, 0, token.Length);
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"Http Request Error:{e.Message}");
+            }
+        }
+    }
 }

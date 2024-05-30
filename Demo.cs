@@ -9,7 +9,7 @@ public class Demo : GameWindow
     ImGuiBackEnd imguiBackEnd;
     LoginWindow login;
     MainWindow main;
-    public Demo() : base(GameWindowSettings.Default, new NativeWindowSettings() { StartVisible = true, APIVersion = new Version(4, 6) })
+    public Demo() : base(GameWindowSettings.Default, new NativeWindowSettings() { StartVisible = true, APIVersion = new Version(4, 1) })
     {
         Title = "OpenIM_SDK_DEMO";
         imguiBackEnd = new ImGuiBackendOpenGL();

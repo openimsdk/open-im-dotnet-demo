@@ -1,3 +1,4 @@
+using System;
 using open_im_sdk;
 
 public enum ConnectStatus
@@ -31,11 +32,26 @@ public class User : IConnCallBack
     {
 
     }
+
+    public static open_im_sdk.PlatformID PlatformID
+    {
+        get
+        {
+#if WINDOWS
+            return open_im_sdk.PlatformID.WindowsPlatformID;
+#elif LINUX
+            return open_im_sdk.PlatformID.LinuxPlatformID;
+#elif MAC
+            return open_im_sdk.PlatformID.OSXPlatformID;
+#endif
+        }
+    }
+
     public bool Init()
     {
         var config = new IMConfig()
         {
-            PlatformID = Config.PlatformID,
+            PlatformID = (int)PlatformID,
             ApiAddr = Config.APIAddr,
             WsAddr = Config.WsAddr,
             DataDir = Config.DataDir,
