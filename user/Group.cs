@@ -1,13 +1,59 @@
-using open_im_sdk;
-using open_im_sdk.listener;
+using OpenIM.IMSDK;
+using OpenIM.IMSDK.Listener;
 
 public class Group : IGroupListener
 {
 
-    public List<LocalGroup> GroupList;
+    public List<GroupInfo> GroupList;
     public Group(User user)
     {
-        GroupList = new List<LocalGroup>();
+        GroupList = new List<GroupInfo>();
+    }
+
+    public void OnGroupApplicationAccepted(GroupApplicationInfo groupApplication)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnGroupApplicationAdded(GroupApplicationInfo groupApplication)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnGroupApplicationDeleted(GroupApplicationInfo groupApplication)
+    {
+    }
+
+    public void OnGroupApplicationRejected(GroupApplicationInfo groupApplication)
+    {
+    }
+
+    public void OnGroupDismissed(GroupInfo groupInfo)
+    {
+    }
+
+    public void OnGroupInfoChanged(GroupInfo groupInfo)
+    {
+    }
+
+    public void OnGroupMemberAdded(GroupMember groupMemberInfo)
+    {
+    }
+
+    public void OnGroupMemberDeleted(GroupMember groupMemberInfo)
+    {
+    }
+
+    public void OnGroupMemberInfoChanged(GroupMember groupMemberInfo)
+    {
+    }
+
+    public void OnJoinedGroupAdded(GroupInfo groupInfo)
+    {
+    }
+
+    public void OnJoinedGroupDeleted(GroupInfo groupInfo)
+    {
     }
 
     public void RefreshGroupList()
@@ -24,47 +70,5 @@ public class Group : IGroupListener
             }
         });
     }
-    public void OnGroupApplicationAccepted(LocalGroupRequest groupApplication)
-    {
-    }
 
-    public void OnGroupApplicationAdded(LocalGroupRequest groupApplication)
-    {
-    }
-
-    public void OnGroupApplicationDeleted(LocalGroupRequest groupApplication)
-    {
-    }
-
-    public void OnGroupApplicationRejected(LocalGroupRequest groupApplication)
-    {
-    }
-
-    public void OnGroupDismissed(LocalGroup groupInfo)
-    {
-    }
-
-    public void OnGroupInfoChanged(LocalGroup groupInfo)
-    {
-    }
-
-    public void OnGroupMemberAdded(LocalGroupMember groupMemberInfo)
-    {
-    }
-
-    public void OnGroupMemberDeleted(LocalGroupMember groupMemberInfo)
-    {
-    }
-
-    public void OnGroupMemberInfoChanged(LocalGroupMember groupMemberInfo)
-    {
-    }
-
-    public void OnJoinedGroupAdded(LocalGroup groupInfo)
-    {
-    }
-
-    public void OnJoinedGroupDeleted(LocalGroup groupInfo)
-    {
-    }
 }

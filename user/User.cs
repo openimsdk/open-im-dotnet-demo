@@ -1,12 +1,13 @@
 using System;
-using open_im_sdk;
+using OpenIM.IMSDK;
+using OpenIM.IMSDK.Listener;
 
 public enum ConnectStatus
 {
     Offline, TokenExpired, Connecting, ConnectSuc, ConnectFailed
 }
 
-public class User : IConnCallBack
+public class User : IConnListener
 {
     static User user;
     public static User Instance
@@ -20,7 +21,7 @@ public class User : IConnCallBack
             return user;
         }
     }
-    public LocalUser SelfUserInfo;
+    public UserInfo SelfUserInfo;
     public Conversation Conversation;
     public FriendShip Friend;
     public Group Group;
@@ -33,16 +34,16 @@ public class User : IConnCallBack
 
     }
 
-    public static open_im_sdk.PlatformID PlatformID
+    public static OpenIM.IMSDK.PlatformID PlatformID
     {
         get
         {
 #if WINDOWS
-            return open_im_sdk.PlatformID.WindowsPlatformID;
+            return OpenIM.IMSDK.PlatformID.WindowsPlatformID;
 #elif LINUX
-            return open_im_sdk.PlatformID.LinuxPlatformID;
+            return OpenIM.IMSDK.PlatformID.LinuxPlatformID;
 #elif MAC
-            return open_im_sdk.PlatformID.OSXPlatformID;
+            return OpenIM.IMSDK.PlatformID.OSXPlatformID;
 #endif
         }
     }
@@ -54,10 +55,10 @@ public class User : IConnCallBack
             PlatformID = (int)PlatformID,
             ApiAddr = Config.APIAddr,
             WsAddr = Config.WsAddr,
-            DataDir = Config.DataDir,
+            DataDir = Path.Combine(AppContext.BaseDirectory, Config.DataDir),
             LogLevel = Config.LogLevel,
             IsLogStandardOutput = Config.IsLogStandardOutput,
-            LogFilePath = Config.LogFilePath,
+            LogFilePath = Path.Combine(AppContext.BaseDirectory, Config.LogFilePath),
             IsExternalExtensions = Config.IsExternalExtensions,
         };
 
@@ -120,7 +121,7 @@ public class User : IConnCallBack
     }
     public void InitData()
     {
-        LoginUser = IMSDK.GetLoginUser();
+        LoginUser = IMSDK.GetLoginUserId();
         LoginStatus = IMSDK.GetLoginStatus();
         IMSDK.GetSelfUserInfo((userInfo, errCode, errMsg) =>
         {
@@ -135,5 +136,9 @@ public class User : IConnCallBack
         });
         Friend.RefreshFriendList();
         Group.RefreshGroupList();
+    }
+
+    public void OnUserTokenInvalid(string errMsg)
+    {
     }
 }
