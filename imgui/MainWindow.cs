@@ -2,7 +2,7 @@ using System.Numerics;
 using System.Text;
 using ImGuiNET;
 using Newtonsoft.Json;
-using open_im_sdk;
+using OpenIM.IMSDK;
 
 public class MainWindow : ImGuiWindow
 {
@@ -138,7 +138,7 @@ public class MainWindow : ImGuiWindow
             if (ImGui.Button("Send"))
             {
                 var msg = IMSDK.CreateTextMessage("中文信息");
-                Debug.Log(open_im_sdk.util.Utils.ToJson(msg));
+                Debug.Log(OpenIM.IMSDK.Util.Utils.ToJson(msg));
             }
         }
         ImGui.EndChild();

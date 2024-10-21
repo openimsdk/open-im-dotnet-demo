@@ -3,7 +3,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using imgui.backend;
-using ImGuiNET;
 public class Demo : GameWindow
 {
     ImGuiBackEnd imguiBackEnd;

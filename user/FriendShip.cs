@@ -1,73 +1,73 @@
-using open_im_sdk;
-using open_im_sdk.listener;
+using OpenIM.IMSDK;
+using OpenIM.IMSDK.Listener;
 public class FriendShip : IFriendShipListener
 {
-    public List<LocalFriend> FriendList;
+    public List<FriendInfo> FriendList;
     public FriendShip(User user)
     {
-        FriendList = new List<LocalFriend>();
+        FriendList = new List<FriendInfo>();
     }
     public void RefreshFriendList()
     {
         IMSDK.GetFriendList((list, errCode, errMsg) =>
-       {
-           if (list != null)
-           {
-               foreach (FullUserInfo fullUserInfo in list)
-               {
-                   FriendList.Add(fullUserInfo.FriendInfo);
-               }
-           }
-           else
-           {
-               Debug.Log(errMsg);
-           }
-       });
+        {
+            if (list != null)
+            {
+                foreach (FriendInfo friend in list)
+                {
+                    FriendList.Add(friend);
+                }
+            }
+            else
+            {
+                Debug.Log(errMsg);
+            }
+        }, true);
     }
-    public void AddFriends(List<LocalFriend> friends)
+    public void AddFriends(List<FriendInfo> friends)
     {
         FriendList.AddRange(friends);
     }
-    public void AddFriend(LocalFriend friend)
+    public void AddFriend(FriendInfo friend)
     {
         FriendList.Add(friend);
     }
 
-    public void OnBlackAdded(LocalBlack blackInfo)
+    public void OnBlackAdded(BlackInfo blackInfo)
     {
     }
 
-    public void OnBlackDeleted(LocalBlack blackInfo)
+    public void OnBlackDeleted(BlackInfo blackInfo)
     {
     }
 
-    public void OnFriendAdded(LocalFriend friendInfo)
+    public void OnFriendAdded(FriendInfo friendInfo)
     {
     }
 
-    public void OnFriendApplicationAccepted(LocalFriendRequest friendApplication)
-    {
-    }
-
-    public void OnFriendApplicationAdded(LocalFriendRequest friendApplication)
-    {
-    }
-
-    public void OnFriendApplicationDeleted(LocalFriendRequest friendApplication)
-    {
-    }
-
-    public void OnFriendApplicationRejected(LocalFriendRequest friendApplication)
-    {
-    }
-
-    public void OnFriendDeleted(LocalFriend friendInfo)
+    public void OnFriendDeleted(FriendInfo friendInfo)
     {
 
     }
 
-    public void OnFriendInfoChanged(LocalFriend friendInfo)
+    public void OnFriendInfoChanged(FriendInfo friendInfo)
     {
 
+    }
+
+    public void OnFriendApplicationAdded(FriendApplicationInfo friendApplication)
+    {
+    }
+
+    public void OnFriendApplicationDeleted(FriendApplicationInfo friendApplication)
+    {
+    }
+
+    public void OnFriendApplicationAccepted(FriendApplicationInfo friendApplication)
+    {
+    }
+
+    public void OnFriendApplicationRejected(FriendApplicationInfo friendApplication)
+    {
     }
 }

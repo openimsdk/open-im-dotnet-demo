@@ -75,7 +75,7 @@ public class LoginWindow : ImGuiWindow
         {
             try
             {
-                var url = string.Format("{0}{1}", Config.APIAddr, "/auth/user_token");
+                var url = string.Format("{0}{1}", Config.APIAddr, "/auth/get_user_token");
                 var userTokenReq = new UserTokenReq()
                 {
                     secret = "openIM123",
@@ -84,13 +84,14 @@ public class LoginWindow : ImGuiWindow
                 };
                 var postData = JsonConvert.SerializeObject(userTokenReq);
                 httpClient.DefaultRequestHeaders.Add("operationID", "111111");
+                httpClient.DefaultRequestHeaders.Add("token", Config.AdminToken);
                 HttpResponseMessage response = await httpClient.PostAsync(url, new StringContent(postData, Encoding.UTF8, "application/json"));
                 response.EnsureSuccessStatusCode();
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var res = JsonConvert.DeserializeObject<UserTokenRes>(jsonResponse);
                 if (res.errCode > 0)
                 {
-                    Console.WriteLine($"Http Request Error Code :{res.errCode + ":" + res.errMsg}");
+                    Debug.Log($"Http Request Error Code :{res.errCode + ":" + res.errMsg}");
                 }
                 else
                 {

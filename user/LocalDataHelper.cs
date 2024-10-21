@@ -3,7 +3,7 @@ public class LocalUserData
 {
     public string UserName;
     public string Token;
-    public open_im_sdk.PlatformID Platform;
+    public OpenIM.IMSDK.PlatformID Platform;
     public long ExpireTime;
 }
 

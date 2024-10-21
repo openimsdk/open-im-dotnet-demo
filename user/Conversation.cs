@@ -1,10 +1,10 @@
-using open_im_sdk;
-using open_im_sdk.listener;
+using OpenIM.IMSDK;
+using OpenIM.IMSDK.Listener;
 public class Conversation : IConversationListener
 {
     User user;
-    List<LocalConversation> conversationList;
-    public List<LocalConversation> ConversationList
+    List<OpenIM.IMSDK.Conversation> conversationList;
+    public List<OpenIM.IMSDK.Conversation> ConversationList
     {
         get
         {
@@ -15,14 +15,14 @@ public class Conversation : IConversationListener
     public Conversation(User user)
     {
         this.user = user;
-        conversationList = new List<LocalConversation>();
+        conversationList = new List<OpenIM.IMSDK.Conversation>();
     }
 
-    public void OnConversationChanged(List<LocalConversation> conversationList)
+    public void OnConversationChanged(List<Conversation> conversationList)
     {
     }
 
-    public void OnNewConversation(List<LocalConversation> conversationList)
+    public void OnNewConversation(List<Conversation> conversationList)
     {
     }
 
@@ -54,6 +54,18 @@ public class Conversation : IConversationListener
     }
 
     public void OnConversationUserInputStatusChanged(InputStatesChangedData data)
+    {
+    }
+
+    public void OnSyncServerProgress(int progress)
+    {
+    }
+
+    public void OnNewConversation(List<OpenIM.IMSDK.Conversation> conversationList)
+    {
+    }
+
+    public void OnConversationChanged(List<OpenIM.IMSDK.Conversation> conversationList)
     {
     }
 }
