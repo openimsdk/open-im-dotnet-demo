@@ -8,7 +8,6 @@ public class Debug
         if (frame != null)
         {
             str += Path.GetFileName(frame.GetFileName()) + ":" + frame.GetFileLineNumber() + " => ";
-            // str += frame.GetFileName() + ":" + frame.GetFileLineNumber() + " => ";
         }
         foreach (var v in args)
         {

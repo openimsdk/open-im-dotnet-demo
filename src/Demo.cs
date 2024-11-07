@@ -10,7 +10,7 @@ public class Demo : GameWindow
     MainWindow main;
     public Demo() : base(GameWindowSettings.Default, new NativeWindowSettings() { StartVisible = true, APIVersion = new Version(4, 1) })
     {
-        Title = "OpenIM_SDK_DEMO";
+        Title = "IMTestDemo";
         imguiBackEnd = new ImGuiBackendOpenGL();
         WindowState = WindowState.Normal;
         int w = 900;
@@ -40,16 +40,15 @@ public class Demo : GameWindow
         base.OnResize(e);
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         imguiBackEnd.WindowResized(ClientSize.X, ClientSize.Y);
-        // OnRenderFrame(new FrameEventArgs(0));
     }
     protected override void OnMove(WindowPositionEventArgs e)
     {
         base.OnMove(e);
-        // OnRenderFrame(new FrameEventArgs(0));
     }
     protected override void OnUpdateFrame(FrameEventArgs args)
     {
         base.OnUpdateFrame(args);
+
         User.Instance.Update();
     }
     protected override void OnRenderFrame(FrameEventArgs e)
