@@ -4,7 +4,7 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using ErrorCode = OpenTK.Graphics.OpenGL4.ErrorCode;
 
-namespace imgui.backend
+namespace Dawn.UI.BackEnd
 {
     public class ImGuiBackendOpenGL : ImGuiBackEnd
     {
