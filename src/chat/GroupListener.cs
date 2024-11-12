@@ -5,11 +5,11 @@ using OpenIMSDK = OpenIM.IMSDK.IMSDK;
 
 namespace IMDemo.Chat
 {
-    public class Group : IGroupListener
+    public class GroupListener : IGroupListener
     {
 
         public List<GroupInfo> GroupList;
-        public Group(User user)
+        public GroupListener(User user)
         {
             GroupList = new List<GroupInfo>();
         }

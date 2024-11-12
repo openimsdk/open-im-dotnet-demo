@@ -9,7 +9,7 @@ namespace Dawn.UI
     {
         public bool visiable;
         public string title;
-        Rect rect;
+        protected Rect rect;
         public ImGuiWindow()
         {
             title = "default";
@@ -32,6 +32,10 @@ namespace Dawn.UI
                     rect.h = size.Y;
                     OnGUI();
                     ImGui.End();
+                }
+                else
+                {
+                    OnClose();
                 }
             }
         }

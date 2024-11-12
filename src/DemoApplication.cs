@@ -8,7 +8,7 @@ namespace IMDemo
 {
     public class DemoApplication : Application
     {
-
+        public Action OnLoadCallBack;
         public DemoApplication(string title, int width, int height) : base(title, width, height)
         {
 
@@ -23,17 +23,44 @@ namespace IMDemo
                 Close();
                 return;
             }
+            if (OnLoadCallBack != null)
+            {
+                OnLoadCallBack();
+            }
         }
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
+
             ChatMgr.Instance.Update();
         }
         protected override void OnGUI()
         {
             // draw
             StatusBar.Draw();
+        }
+
+        public void TryUserLogin(string uid, string token)
+        {
+            if (ChatMgr.Instance.currentUser == null)
+            {
+                var user = new User(uid, token);
+                user.Login();
+                ChatMgr.Instance.currentUser = user;
+                Title = "IMDemo-" + uid;
+            }
+            else
+            {
+                if (ChatMgr.Instance.currentUser.uid != uid)
+                {
+                    CreateNewInstance(uid, token);
+                }
+                else
+                {
+                    Debug.Log("Already Login");
+                }
+            }
         }
     }
 }

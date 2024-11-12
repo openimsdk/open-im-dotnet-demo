@@ -35,7 +35,34 @@ namespace IMDemo.UI
         {
             if (selfUserInfo != null)
             {
-                ImGui.Text(selfUserInfo.Nickname);
+                ImGui.Columns(2, "UserInfoColumns", false);
+                ImGui.SetColumnWidth(0, 150);
+
+                ImGui.Text("UserId"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.UserID}"); ImGui.NextColumn();
+
+                ImGui.Text("NickName"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.Nickname}"); ImGui.NextColumn();
+
+                ImGui.Text("FaceUrl"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.FaceURL}"); ImGui.NextColumn();
+
+                ImGui.Text("CreateTime"); ImGui.NextColumn();
+                ImGui.Text($"{Time.GetTimeStampStr(selfUserInfo.CreateTime / 1000)}"); ImGui.NextColumn();
+
+                ImGui.Text("AppManagerLevel"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.AppMangerLevel}"); ImGui.NextColumn();
+
+                ImGui.Text("Ex"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.Ex}"); ImGui.NextColumn();
+
+                ImGui.Text("AttachedInfo"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.AttachedInfo}"); ImGui.NextColumn();
+
+                ImGui.Text("GlobalRecvMsgOpt"); ImGui.NextColumn();
+                ImGui.Text($"{selfUserInfo.GlobalRecvMsgOpt}"); ImGui.NextColumn();
+
+                ImGui.Columns(1);
             }
         }
     }

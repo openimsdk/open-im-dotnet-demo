@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenIM.Demo.Data
+namespace IMDemo.Data
 {
     [Serializable]
     public class UserTokenReq

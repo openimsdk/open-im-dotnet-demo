@@ -5,7 +5,7 @@ using OpenIMSDK = OpenIM.IMSDK.IMSDK;
 
 namespace IMDemo.Chat
 {
-    public class Conversation : IConversationListener
+    public class ConversationListener : IConversationListener
     {
         User user;
         List<OpenIM.IMSDK.Conversation> conversationList;
@@ -17,7 +17,7 @@ namespace IMDemo.Chat
             }
         }
 
-        public Conversation(User user)
+        public ConversationListener(User user)
         {
             this.user = user;
             conversationList = new List<OpenIM.IMSDK.Conversation>();
@@ -63,14 +63,6 @@ namespace IMDemo.Chat
         }
 
         public void OnSyncServerProgress(int progress)
-        {
-        }
-
-        public void OnNewConversation(List<OpenIM.IMSDK.Conversation> conversationList)
-        {
-        }
-
-        public void OnConversationChanged(List<OpenIM.IMSDK.Conversation> conversationList)
         {
         }
     }

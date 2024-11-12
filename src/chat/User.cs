@@ -10,20 +10,20 @@ namespace IMDemo.Chat
         public string token;
         public UserInfo selfUserInfo;
         public LoginStatus loginStatus = LoginStatus.Empty;
-        Conversation conversation;
-        FriendShip friend;
-        Group group;
+        ConversationListener conversationListener;
+        FriendShipListener friendShipListener;
+        GroupListener groupListener;
         public User(string uid, string token)
         {
             this.uid = uid;
             this.token = token;
-            conversation = new Conversation(this);
-            friend = new FriendShip(this);
-            group = new Group(this);
+            conversationListener = new ConversationListener(this);
+            friendShipListener = new FriendShipListener(this);
+            groupListener = new GroupListener(this);
 
-            OpenIMSDK.SetConversationListener(conversation);
-            OpenIMSDK.SetFriendShipListener(friend);
-            OpenIMSDK.SetGroupListener(group);
+            OpenIMSDK.SetConversationListener(conversationListener);
+            OpenIMSDK.SetFriendShipListener(friendShipListener);
+            OpenIMSDK.SetGroupListener(groupListener);
         }
 
         public void Login()

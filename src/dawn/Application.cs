@@ -87,6 +87,21 @@ namespace Dawn
         {
             Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
+
+        public static void CreateNewInstance(string uid, string token)
+        {
+            string currentDllPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var exePath = currentDllPath.Replace(".dll", ".exe");
+
+            string parameters = $" --uid {uid} --token {token}";
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = exePath,
+                Arguments = parameters,
+                UseShellExecute = true,
+            });
+        }
     }
 }
 

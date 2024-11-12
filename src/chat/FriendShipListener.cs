@@ -5,10 +5,10 @@ using OpenIMSDK = OpenIM.IMSDK.IMSDK;
 
 namespace IMDemo.Chat
 {
-    public class FriendShip : IFriendShipListener
+    public class FriendShipListener : IFriendShipListener
     {
         public List<FriendInfo> FriendList;
-        public FriendShip(User user)
+        public FriendShipListener(User user)
         {
             FriendList = new List<FriendInfo>();
         }
