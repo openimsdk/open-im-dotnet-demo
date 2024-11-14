@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using IMDemo;
+﻿using IMDemo;
 using IMDemo.Chat;
 
 var arguments = new Dictionary<string, string>();
@@ -21,9 +20,7 @@ if (arguments.Count > 0)
         {
             var uid = arguments["uid"];
             var token = arguments["token"];
-            Dawn.Debug.Log(uid);
-            Dawn.Debug.Log(token);
-            app.TryUserLogin(uid, token);
+            User.TryLogin(uid, token);
         }
     };
 }

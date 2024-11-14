@@ -10,10 +10,12 @@ namespace Dawn.UI
         public bool visiable;
         public string title;
         protected Rect rect;
+        ImGuiWindowFlags flags;
         public ImGuiWindow()
         {
             title = "default";
             rect = new Rect(50, 50, 300, 300);
+            flags = ImGuiWindowFlags.None;
         }
 
         public void internal_onGUi()
@@ -22,7 +24,7 @@ namespace Dawn.UI
             {
                 ImGui.SetNextWindowSize(new Vector2(rect.w, rect.h));
                 ImGui.SetNextWindowPos(new Vector2(rect.x, rect.y), ImGuiCond.FirstUseEver);
-                if (ImGui.Begin(title, ref visiable))
+                if (ImGui.Begin(title, ref visiable, flags))
                 {
                     var pos = ImGui.GetWindowPos();
                     var size = ImGui.GetWindowSize();
@@ -63,9 +65,10 @@ namespace Dawn.UI
             return Application.GetWindow<T>();
         }
 
-        public void Show(string title)
+        public void Show(string title, ImGuiWindowFlags flags = ImGuiWindowFlags.None)
         {
             this.title = title;
+            this.flags = flags;
             visiable = true;
             OnEnable();
         }

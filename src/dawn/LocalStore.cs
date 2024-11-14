@@ -4,7 +4,7 @@ namespace Dawn
 {
     public static class LocalStore
     {
-        static string localDataFileName = "./temp/localdata.json";
+        // static string localDataFileName = "./temp/localdata.json";
 
         // public static LocalUserData GetLocalUserData(string userName)
         // {

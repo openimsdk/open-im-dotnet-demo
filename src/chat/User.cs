@@ -8,11 +8,13 @@ namespace IMDemo.Chat
     {
         public string uid;
         public string token;
-        public UserInfo selfUserInfo;
         public LoginStatus loginStatus = LoginStatus.Empty;
         ConversationListener conversationListener;
         FriendShipListener friendShipListener;
         GroupListener groupListener;
+
+        public int totalUnreadCount;
+
         public User(string uid, string token)
         {
             this.uid = uid;
@@ -40,9 +42,59 @@ namespace IMDemo.Chat
                 }
             });
         }
+        public void Logout()
+        {
+            OpenIMSDK.Logout((bool suc, int errCode, string errMsg) =>
+            {
+                if (suc)
+                {
+                    Debug.Log($"{uid} Logout suc");
+                    ChatMgr.Instance.currentUser = null;
+                    ChatMgr.Application.Title = "IMDemo";
+                }
+                else
+                {
+                    Debug.Log(errCode, errMsg);
+                }
+            });
+        }
         void OnLoginSuc()
         {
+            uid = OpenIMSDK.GetLoginUserId();
+            ChatMgr.Application.Title = "IMDemo-" + uid;
             loginStatus = OpenIMSDK.GetLoginStatus();
+            OpenIMSDK.GetTotalUnreadMsgCount((count, err, errMsg) =>
+            {
+                if (err > 0)
+                {
+                    Debug.Error(errMsg);
+                }
+                else
+                {
+                    totalUnreadCount = count;
+                }
+            });
+        }
+
+        public static void TryLogin(string uid, string token)
+        {
+            if (ChatMgr.Instance.currentUser == null)
+            {
+                var user = new User(uid, token);
+                user.Login();
+                ChatMgr.Instance.currentUser = user;
+            }
+            else
+            {
+                if (ChatMgr.Instance.currentUser.uid != uid)
+                {
+                    Application.CreateNewInstance(uid, token);
+                }
+                else
+                {
+                    Debug.Log("Already Login");
+                }
+            }
         }
     }
 }

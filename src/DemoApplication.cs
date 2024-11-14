@@ -28,6 +28,11 @@ namespace IMDemo
                 OnLoadCallBack();
             }
         }
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            ChatMgr.Instance.UnInitSDK();
+        }
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
@@ -39,28 +44,6 @@ namespace IMDemo
         {
             // draw
             StatusBar.Draw();
-        }
-
-        public void TryUserLogin(string uid, string token)
-        {
-            if (ChatMgr.Instance.currentUser == null)
-            {
-                var user = new User(uid, token);
-                user.Login();
-                ChatMgr.Instance.currentUser = user;
-                Title = "IMDemo-" + uid;
-            }
-            else
-            {
-                if (ChatMgr.Instance.currentUser.uid != uid)
-                {
-                    CreateNewInstance(uid, token);
-                }
-                else
-                {
-                    Debug.Log("Already Login");
-                }
-            }
         }
     }
 }

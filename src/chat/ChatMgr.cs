@@ -29,19 +29,19 @@ namespace IMDemo.Chat
         {
             connListener = new ConnListener();
         }
-        public static OpenIM.IMSDK.PlatformID PlatformID = OpenIM.IMSDK.PlatformID.AndroidPlatformID;
-        // {
-        //             get
-        //             {
-        // #if WINDOWS
-        //                 return OpenIM.IMSDK.PlatformID.AndroidPlatformID;
-        // #elif LINUX
-        //             return OpenIM.IMSDK.PlatformID.LinuxPlatformID;
-        // #elif MAC
-        //             return OpenIM.IMSDK.PlatformID.OSXPlatformID;
-        // #endif
-        //             }
-        // }
+        public static OpenIM.IMSDK.PlatformID PlatformID
+        {
+            get
+            {
+#if WINDOWS
+                return OpenIM.IMSDK.PlatformID.WindowsPlatformID;
+#elif LINUX
+                return OpenIM.IMSDK.PlatformID.LinuxPlatformID;
+#elif MAC
+                return OpenIM.IMSDK.PlatformID.OSXPlatformID;
+#endif
+            }
+        }
         public bool InitSDK()
         {
             var config = new IMConfig()
@@ -58,7 +58,10 @@ namespace IMDemo.Chat
 
             return OpenIMSDK.InitSDK(config, connListener);
         }
-
+        public void UnInitSDK()
+        {
+            OpenIMSDK.UnInitSDK();
+        }
         public void Update()
         {
             OpenIMSDK.Polling();

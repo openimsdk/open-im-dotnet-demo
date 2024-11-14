@@ -6,18 +6,19 @@ using OpenIMSDK = OpenIM.IMSDK.IMSDK;
 
 namespace IMDemo.UI
 {
-    public class ConversationInfoWindow : ImGuiWindow
+    public class ChatWindow : ImGuiWindow
     {
-        public static void ShowConversationInfo(Conversation conversation)
+        public static void ShowChatWindow(Conversation conversation)
         {
-            var window = GetWindow<ConversationInfoWindow>();
+            var window = GetWindow<ChatWindow>();
             window.conversation = conversation;
-            window.Show("Conversation");
+            window.Show("Chat");
         }
 
         public Conversation conversation;
         public override void OnEnable()
         {
+
         }
 
         public override void OnGUI()

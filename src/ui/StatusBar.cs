@@ -22,10 +22,10 @@ namespace IMDemo.UI
                 ImGui.SameLine();
                 var user = ChatMgr.Instance.currentUser;
                 ImGui.Text(string.Format("  {0}:{1}", user.uid, user.loginStatus));
-            }
 
-            // ImGui.SameLine();
-            // ImGui.Text("FPS: " + (1.0f / ImGui.GetIO().DeltaTime).ToString("F0"));
+                ImGui.SameLine();
+                ImGui.Text(string.Format("  {0}:{1}", "TotalUnReadCount", user.totalUnreadCount));
+            }
 
             ImGui.End();
 

@@ -18,6 +18,11 @@ namespace Dawn
             }
             Console.WriteLine(str);
         }
+
+        public static void Error(params object[] args)
+        {
+            Log("[Error]", args);
+        }
     }
 }
 
