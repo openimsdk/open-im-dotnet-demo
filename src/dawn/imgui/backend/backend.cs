@@ -2,7 +2,8 @@ using ImGuiNET;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-namespace imgui.backend
+
+namespace Dawn.UI.BackEnd
 {
     public class ImGuiBackEnd : IDisposable
     {

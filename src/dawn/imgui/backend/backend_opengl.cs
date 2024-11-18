@@ -4,7 +4,7 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using ErrorCode = OpenTK.Graphics.OpenGL4.ErrorCode;
 
-namespace imgui.backend
+namespace Dawn.UI.BackEnd
 {
     public class ImGuiBackendOpenGL : ImGuiBackEnd
     {
@@ -39,7 +39,7 @@ namespace imgui.backend
             // io.Fonts.AddFontFromFileTTF("./res/fonts/PingFang-SC-Light.ttf", 16, new ImFontConfigPtr
             // {
             // }, io.Fonts.GetGlyphRangesChineseFull());
-            io.Fonts.AddFontFromFileTTF("./PingFang-SC-Regular.ttf", 16, null, io.Fonts.GetGlyphRangesChineseFull());
+            io.Fonts.AddFontFromFileTTF("./res/PingFang-SC-Regular.ttf", 16, null, io.Fonts.GetGlyphRangesChineseFull());
             io.FontGlobalScale = 1.0f;
             ImGui.GetStyle().AntiAliasedLines = true;
             ImGui.GetStyle().AntiAliasedFill = true;
