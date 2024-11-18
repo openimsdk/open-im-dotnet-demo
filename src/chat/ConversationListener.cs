@@ -7,20 +7,8 @@ namespace IMDemo.Chat
 {
     public class ConversationListener : IConversationListener
     {
-        User user;
-        List<OpenIM.IMSDK.Conversation> conversationList;
-        public List<OpenIM.IMSDK.Conversation> ConversationList
+        public ConversationListener()
         {
-            get
-            {
-                return conversationList;
-            }
-        }
-
-        public ConversationListener(User user)
-        {
-            this.user = user;
-            conversationList = new List<OpenIM.IMSDK.Conversation>();
         }
 
         public void OnConversationChanged(List<Conversation> conversationList)
@@ -33,21 +21,6 @@ namespace IMDemo.Chat
 
         public void OnSyncServerFailed()
         {
-        }
-
-        public void OnSyncServerFinish()
-        {
-            OpenIMSDK.GetAllConversationList((list, errCode, errMsg) =>
-            {
-                if (list != null)
-                {
-                    conversationList.AddRange(list);
-                }
-                else
-                {
-                    Debug.Log(errCode, errMsg);
-                }
-            });
         }
 
         public void OnSyncServerStart()
@@ -63,6 +36,10 @@ namespace IMDemo.Chat
         }
 
         public void OnSyncServerProgress(int progress)
+        {
+        }
+
+        public void OnSyncServerFinish()
         {
         }
     }

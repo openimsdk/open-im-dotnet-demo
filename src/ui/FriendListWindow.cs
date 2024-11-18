@@ -114,7 +114,7 @@ namespace IMDemo.UI
         }
         void OnDetailClick(FriendInfo friend)
         {
-
+            FriendInfoWindow.ShowFriendInfo(friend);
         }
     }
 }

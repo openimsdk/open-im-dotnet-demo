@@ -7,36 +7,10 @@ namespace IMDemo.Chat
 {
     public class FriendShipListener : IFriendShipListener
     {
-        public List<FriendInfo> FriendList;
-        public FriendShipListener(User user)
+        public FriendShipListener()
         {
-            FriendList = new List<FriendInfo>();
         }
-        public void RefreshFriendList()
-        {
-            OpenIMSDK.GetFriendList((list, errCode, errMsg) =>
-            {
-                if (list != null)
-                {
-                    foreach (FriendInfo friend in list)
-                    {
-                        FriendList.Add(friend);
-                    }
-                }
-                else
-                {
-                    Debug.Log(errMsg);
-                }
-            }, true);
-        }
-        public void AddFriends(List<FriendInfo> friends)
-        {
-            FriendList.AddRange(friends);
-        }
-        public void AddFriend(FriendInfo friend)
-        {
-            FriendList.Add(friend);
-        }
+
 
         public void OnBlackAdded(BlackInfo blackInfo)
         {

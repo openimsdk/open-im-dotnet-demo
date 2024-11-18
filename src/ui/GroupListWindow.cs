@@ -98,7 +98,7 @@ namespace IMDemo.UI
         }
         void OnDetailClick(GroupInfo group)
         {
-
+            GroupInfoWindow.ShowGroupInfo(group);
         }
         void OnDeleteClick(GroupInfo group)
         {

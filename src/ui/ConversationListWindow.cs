@@ -107,7 +107,7 @@ namespace IMDemo.UI
         }
         void OnDetailClick(Conversation conversation)
         {
-
+            ConversationInfoWindow.ShowConversationInfo(conversation);
         }
     }
 }

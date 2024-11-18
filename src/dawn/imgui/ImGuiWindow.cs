@@ -1,7 +1,6 @@
 
 using System.Numerics;
 using ImGuiNET;
-using Microsoft.VisualBasic;
 
 namespace Dawn.UI
 {
@@ -51,7 +50,7 @@ namespace Dawn.UI
         }
         public virtual void OnClose()
         {
-
+            Application.DelWindow(this);
         }
 
         public void Close()

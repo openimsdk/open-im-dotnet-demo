@@ -9,23 +9,25 @@ namespace IMDemo.Chat
         public string uid;
         public string token;
         public LoginStatus loginStatus = LoginStatus.Empty;
-        ConversationListener conversationListener;
-        FriendShipListener friendShipListener;
-        GroupListener groupListener;
-
+        public ConversationListener conversationListener;
+        public FriendShipListener friendShipListener;
+        public GroupListener groupListener;
+        public MessageListener messageListener;
         public int totalUnreadCount;
 
         public User(string uid, string token)
         {
             this.uid = uid;
             this.token = token;
-            conversationListener = new ConversationListener(this);
-            friendShipListener = new FriendShipListener(this);
-            groupListener = new GroupListener(this);
+            conversationListener = new ConversationListener();
+            friendShipListener = new FriendShipListener();
+            groupListener = new GroupListener();
+            messageListener = new MessageListener();
 
             OpenIMSDK.SetConversationListener(conversationListener);
             OpenIMSDK.SetFriendShipListener(friendShipListener);
             OpenIMSDK.SetGroupListener(groupListener);
+            OpenIMSDK.SetBatchMsgListener(messageListener);
         }
 
         public void Login()

@@ -7,11 +7,8 @@ namespace IMDemo.Chat
 {
     public class GroupListener : IGroupListener
     {
-
-        public List<GroupInfo> GroupList;
-        public GroupListener(User user)
+        public GroupListener()
         {
-            GroupList = new List<GroupInfo>();
         }
 
         public void OnGroupApplicationAccepted(GroupApplicationInfo groupApplication)
@@ -59,22 +56,6 @@ namespace IMDemo.Chat
         public void OnJoinedGroupDeleted(GroupInfo groupInfo)
         {
         }
-
-        public void RefreshGroupList()
-        {
-            OpenIMSDK.GetJoinedGroupList((list, err, errMsg) =>
-            {
-                if (list != null)
-                {
-                    GroupList.AddRange(list);
-                }
-                else
-                {
-                    Debug.Log(errMsg);
-                }
-            });
-        }
-
     }
 }
 
